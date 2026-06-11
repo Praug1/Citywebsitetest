@@ -29,8 +29,8 @@
 <td>
 <select id="department" required>
   <option value="">-- Select Department --</option>
-  <option value="City Manager">City Manager’s Office</option>
-  <option value="HR">Assistant City Manager, HR</option>
+  <option value="jagycoslpoer@gmail.com">City Manager’s Office</option>
+  <option value="jonahwest77@gmail.com">Assistant City Manager, HR</option>
   <option value="Finance">Finance Department</option>
   <option value="Assessor">Assessor</option>
   <option value="Building">Building Department</option>
@@ -114,7 +114,7 @@ document.getElementById("citizenForm").addEventListener("submit", async function
   };
 
   try {
-    const res = await fetch("https://YOUR-BACKEND-URL.onrender.com/send", {
+    const res = await fetch("https://citywebsitetest.onrender.com/send", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"

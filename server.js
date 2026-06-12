@@ -18,11 +18,27 @@ sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 app.post("/send", async (req, res) => {
   const { department, name, email, phone, issue, response } = req.body;
 
-  console.log("Form received:", req.body);
+  const departmentEmails = {
+    "City Manager’s Office": "jonahwest77@gmail.com",
+    "Assistant City Manager": "jagycoslpoer@gmail.com",
+    "Finance": "mmarionweismuller@gmail.com",
+    "Assessor": "assessor@yourcity.org",
+    "Building": "building@yourcity.org",
+    "Code Enforcement": "code@yourcity.org",
+    "Clerk": "clerk@yourcity.org",
+    "Utilities": "utilities@yourcity.org",
+    "Fire": "fire@yourcity.org",
+    "Police": "police@yourcity.org",
+    "DPS": "dps@yourcity.org"
+  };
+
+  const recipient =
+    departmentEmails[department] || process.env.EMAIL_TO;
 
   const msg = {
-    to: process.env.EMAIL_TO,
-    from: process.env.EMAIL_TO, // must match verified sender
+    to: recipient,
+    from: process.env.EMAIL_TO,
+    replyTo: email,
     subject: `Citizen Request - ${department}`,
     text: `
 Department: ${department}
@@ -39,24 +55,14 @@ ${issue}
   try {
     await sgMail.send(msg);
 
-    console.log("Email sent successfully");
-
     res.status(200).json({
       success: true,
       message: "Email sent"
     });
-
   } catch (err) {
-    console.error("SendGrid Error:", err.response?.body || err);
-
+    console.error(err);
     res.status(500).json({
-      success: false,
-      error: "Email failed"
+      success: false
     });
   }
-});
-
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log("Server running on port", PORT);
 });

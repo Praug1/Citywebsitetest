@@ -20,7 +20,7 @@ app.post("/send", async (req, res) => {
 
   const departmentEmails = {
     "City Manager’s Office": "mayor@threeriversmi.org",
-    "City Mayor": "mayor@threeriversmi.org",
+    "Assistant City Manager": "HR@threeriversmi.org",
     "Finance": "BSchoon@threeriversmi.org",
     "Assessor": "chad.apgllc@gmail.com",
     "Building": "athensmi@safebuilt.com",

@@ -20,16 +20,16 @@ app.post("/send", async (req, res) => {
 
   const departmentEmails = {
     "City Manager’s Office": "mayor@threeriversmi.org",
-    "Assistant City Manager": "jagycoslpoer@gmail.com",
-    "Finance": "mmarionweismuller@gmail.com",
-    "Assessor": "jonahwest77@gmail.com",
-    "Building": "building@yourcity.org",
-    "Code Enforcement": "code@yourcity.org",
-    "Clerk": "clerk@yourcity.org",
-    "Utilities": "utilities@yourcity.org",
-    "Fire": "fire@yourcity.org",
-    "Police": "police@yourcity.org",
-    "DPS": "dps@yourcity.org"
+    "City Mayor": "mayor@threeriversmi.org",
+    "Finance": "BSchoon@threeriversmi.org",
+    "Assessor": "chad.apgllc@gmail.com",
+    "Building": "athensmi@safebuilt.com",
+    "Code Enforcement": "JBeebe@threeriversmi.org",
+    "Clerk": "LWilson@threeriversmi.org",
+    "Utilities": "WaterBilling@threeriversmi.org",
+    "Fire": "PaulS@threeriversmi.org",
+    "Police": "SBoling@threeriversmi.org",
+    "DPS": "ARoth@threeriversmi.org"
   };
 
   const recipient =

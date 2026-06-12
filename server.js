@@ -1,57 +1,62 @@
 const express = require("express");
-const nodemailer = require("nodemailer");
 const cors = require("cors");
+const sgMail = require("@sendgrid/mail");
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
 
-console.log("EMAIL_USER exists:", !!process.env.EMAIL_USER);
-console.log("EMAIL_PASS exists:", !!process.env.EMAIL_PASS);
-
+// Health check
 app.get("/", (req, res) => {
   res.send("Server is running");
 });
 
+// SendGrid setup
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+
 app.post("/send", async (req, res) => {
   const { department, name, email, phone, issue, response } = req.body;
 
-  try {
-    const transporter = nodemailer.createTransport({
-      service: "gmail",
-      auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS
-      }
-    });
+  console.log("Form received:", req.body);
 
-    console.log("Testing SMTP...");
-
-    await transporter.verify(); // ✅ now valid
-
-    console.log("SMTP OK");
-
-    await transporter.sendMail({
-      from: process.env.EMAIL_USER,
-      replyTo: email,
-      to: process.env.EMAIL_USER,
-      subject: `Citizen Request - ${department}`,
-      text: `
+  const msg = {
+    to: process.env.EMAIL_TO,
+    from: process.env.EMAIL_TO, // must match verified sender
+    subject: `Citizen Request - ${department}`,
+    text: `
 Department: ${department}
 Name: ${name}
 Email: ${email}
 Phone: ${phone}
-Response: ${response}
+Preferred Response: ${response}
 
 Issue:
 ${issue}
-      `
+    `
+  };
+
+  try {
+    await sgMail.send(msg);
+
+    console.log("Email sent successfully");
+
+    res.status(200).json({
+      success: true,
+      message: "Email sent"
     });
 
-    res.status(200).send("Email sent");
   } catch (err) {
-    console.error("EMAIL ERROR:", err);
-    res.status(500).send("Error sending email");
+    console.error("SendGrid Error:", err.response?.body || err);
+
+    res.status(500).json({
+      success: false,
+      error: "Email failed"
+    });
   }
+});
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log("Server running on port", PORT);
 });

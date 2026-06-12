@@ -15,19 +15,18 @@ app.get("/", (req, res) => {
 });
 
 app.post("/send", async (req, res) => {
-  const { department, name, email, phone, issue, response } = req.body;
-
-  console.log("Form submission received:");
-  console.log(req.body);
+  console.log("REQUEST RECEIVED:", req.body);
 
   try {
-    const transporter = nodemailer.createTransport({
-      service: "gmail",
-      auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS
-      }
+    res.status(200).json({
+      success: true,
+      message: "Server received form (email temporarily disabled)"
     });
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("Server error");
+  }
+});
 
     console.log("Testing SMTP connection...");
 

@@ -1,5 +1,5 @@
 {
-  "name": "citizen-request-server",
+  "name": "citywebsitetest",
   "version": "1.0.0",
   "main": "server.js",
   "scripts": {
@@ -7,7 +7,6 @@
   },
   "dependencies": {
     "express": "^4.18.2",
-    "nodemailer": "^6.9.0",
     "cors": "^2.8.5",
     "@sendgrid/mail": "^8.1.0"
   }

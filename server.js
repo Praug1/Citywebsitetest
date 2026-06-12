@@ -59,10 +59,16 @@ ${issue}
       success: true,
       message: "Email sent"
     });
-  } catch (err) {
+    } catch (err) {
     console.error(err);
     res.status(500).json({
       success: false
     });
   }
+});
+
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => {
+  console.log("Server running on port", PORT);
 });

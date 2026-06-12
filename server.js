@@ -15,24 +15,22 @@ app.get("/", (req, res) => {
 });
 
 app.post("/send", async (req, res) => {
-  console.log("REQUEST RECEIVED:", req.body);
+  const { department, name, email, phone, issue, response } = req.body;
 
   try {
-    res.status(200).json({
-      success: true,
-      message: "Server received form (email temporarily disabled)"
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS
+      }
     });
-  } catch (err) {
-    console.log(err);
-    res.status(500).send("Server error");
-  }
-});
 
-    console.log("Testing SMTP connection...");
+    console.log("Testing SMTP...");
 
-    await transporter.verify();
+    await transporter.verify(); // ✅ now valid
 
-    console.log("SMTP connection successful.");
+    console.log("SMTP OK");
 
     await transporter.sendMail({
       from: process.env.EMAIL_USER,
@@ -44,31 +42,16 @@ Department: ${department}
 Name: ${name}
 Email: ${email}
 Phone: ${phone}
-Preferred Response: ${response}
+Response: ${response}
 
 Issue:
 ${issue}
       `
     });
 
-    console.log("Email sent successfully.");
-
-    res.status(200).json({
-      success: true,
-      message: "Email sent"
-    });
-
+    res.status(200).send("Email sent");
   } catch (err) {
-    console.error("EMAIL ERROR:");
-    console.error(err);
-
-    res.status(500).json({
-      success: false,
-      error: err.message
-    });
+    console.error("EMAIL ERROR:", err);
+    res.status(500).send("Error sending email");
   }
-});
-
-app.listen(process.env.PORT || 3000, () => {
-  console.log("Server running");
 });

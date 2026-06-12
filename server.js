@@ -19,10 +19,10 @@ app.post("/send", async (req, res) => {
   const { department, name, email, phone, issue, response } = req.body;
 
   const departmentEmails = {
-    "City Manager’s Office": "jonahwest77@gmail.com",
+    "City Manager’s Office": "mayor@threeriversmi.org",
     "Assistant City Manager": "jagycoslpoer@gmail.com",
     "Finance": "mmarionweismuller@gmail.com",
-    "Assessor": "assessor@yourcity.org",
+    "Assessor": "jonahwest77@gmail.com",
     "Building": "building@yourcity.org",
     "Code Enforcement": "code@yourcity.org",
     "Clerk": "clerk@yourcity.org",
